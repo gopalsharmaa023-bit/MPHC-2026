@@ -1,10 +1,4 @@
-typedWords.forEach((word, index) => {
-                if (word === originalWords[index]) {
-                    correctCount++;
-                }
-            });
-
-            let accuracy = typedWords.length > 0 ? Math.round((correctCount / typedWords.length) * 100) : 100;
+let accuracy = typedWords.length > 0 ? Math.round((correctCount / typedWords.length) * 100) : 100;
             document.getElementById("accuracyDisplay").innerText = accuracy + "%";
         }
 
