@@ -19,20 +19,9 @@ let accuracy = typedWords.length > 0 ? Math.round((correctCount / typedWords.len
         }
 
         function submitTest() {
-            clearInterval(timerId);
-            alert("आपका टेस्ट सबमिट हो गया है! कुल शब्द: " + document.getElementById("wordCount").innerText + ", शुद्धता: " + document.getElementById("accuracyDisplay").innerText);
-        }
+           // 1. सबसे पहले टाइमर को रोकें ताकि स्क्रीन दोबारा न बदले
+    clearInterval(timerId); 
+    isRunning = false; 
 
-        function resetTest() {
-            clearInterval(timerId);
-            timeLeft = 600;
-            isRunning = false;
-            document.getElementById("timerDisplay").innerText = "10:00";
-            document.getElementById("wordCount").innerText = "0";
-            document.getElementById("accuracyDisplay").innerText = "100%";
-            document.getElementById("typingArea").value = "";
-            document.getElementById("typingArea").disabled = false;
-        }
-    </script>
-</body>
-</html>
+    // 2. इसके बाद अपना अलर्ट मैसेज दिखाएं
+    alert("आपका टेस्ट सबमिट हो गया है! कुल शब्द: " + document.getElementById("wordCount").innerText + ", शुद्धता: " + document.getElementById("accuracyDisplay").innerText);
