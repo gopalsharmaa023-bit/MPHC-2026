@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>MP High Court Hindi Typing Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; user-select: none; }
+        .header { background-color: #0d3559; color: white; padding: 15px; text-align: center; font-size: 20px; font-weight: bold; }
+        .container { display: flex; margin-top: 20px; gap: 20px; }
+        .main-content { flex: 7; }
+        .sidebar { flex: 3; background: #fff; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .box { background: white; border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-bottom: 15px; min-height: 180px; max-height: 220px; font-size: 20px; line-height: 1.8; overflow-y: auto; word-spacing: 4px; }
+        select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; }
+        textarea { height: 150px; font-size: 20px; line-height: 1.6; resize: none; }
+        .stats { margin-bottom: 15px; font-size: 18px; text-align: center; border: 1px solid #ddd; padding: 10px; background: #fbfbfb; }
+        .stats span { font-weight: bold; display: block; font-size: 24px; color: #333; }
+        .btn-submit { background-color: #28a745; color: white; border: none; font-weight: bold; padding: 15px; font-size: 18px; cursor: pointer; width: 100%; margin-top: 20px; }
+        
+        /* वर्ड हाइलाइट स्टाइल */
+        .word { padding: 2px 4px; border-radius: 3px; display: inline-block; color: #000; }
+        .current-word { background-color: #fff3cd !important; border: 1px solid #ffeba2; font-weight: bold; }
+        .correct-word { color: #28a745 !important; }
+        .incorrect-word { color: #dc3545 !important; text-decoration: line-through; }
+        .status-success { color: green; font-weight: bold; text-align: center; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    MP HIGH COURT HINDI TYPING TEST SOFTWARE (AG-3 PATTERN)
+</div>
+
+<p id="systemStatus" class="status-success">🔄 सिस्टम लोड हो रहा है...</p>
+
+<div class="container">
+    <div class="main-content">
+        <label><strong>पैराग्राफ चुनें (Select Court Matter):</strong></label>
+        <select id="paragraphSelect" onchange="loadParagraph()">
+            <option value="">-- कृपया पैराग्राफ चुनें --</option>
+            <option value="matter1">कोर्ट मैटर 1 (350+ शब्द) - न्यायिक प्रक्रिया</option>
+            <option value="matter2">कोर्ट मैटर 2 (350+ शब्द) - प्रशासनिक कानून</option>
+            <option value="matter3">कोर्ट मैटर 3 (350+ शब्द) - आपराधिक विवेचना</option>
+        </select>
+        
+        <div id="paragraphDisplay" class="box" style="margin-top: 15px;">
+            कृपया ऊपर से कोई भी एक कोर्ट मैटर चुनें...
+        </div>
+
+        <textarea id="typingArea" placeholder="यहाँ हिंदी में टाइप करना शुरू करें... (पहला अक्षर टाइप करते ही टाइमर चालू हो जाएगा)" oninput="startTest()" onkeydown="handleSpace(event)"></textarea>
+        
+        <button class="btn-submit" onclick="submitTest()">TEST SUBMIT KAREN</button>
+    </div>
+
+    <div class="sidebar">
+        <div class="stats">
+            समय शेष (Time Remaining)
+            <span id="timer">10:00</span>
+        </div>
+        <div class="stats">
+            कुल टाइप शब्द (Total Typed)
+            <span id="wordCount">0</span>
+        </div>
+        <div class="stats">
+            लाइव शुद्धता (Accuracy)
+            <span id="accuracy">100%</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // पुराना जावास्क्रिप्ट कोड हटाकर बिल्कुल साधारण तरीका (ES5) इस्तेमाल किया है
+    var paragraphs = {
+        matter1: "न्यायिक प्रक्रिया के अंतर्गत इस मामले के तथ्यों पर विचार करना अत्यंत आवश्यक है। विद्वान अधिवक्ता ने यह तर्क प्रस्तुत किया कि अधीनस्थ न्यायालय द्वारा पारित आदेश विधि के सिद्धांतों के सर्वथा विपरीत है और इसमें साक्ष्यों का सही मूल्यांकन नहीं किया गया है। अपीलकर्ता की ओर से यह दलील दी गई कि प्रथम सूचना रिपोर्ट दर्ज करने में अकारण विलंब किया गया जिससे अभियोजन की कहानी पर संदेह उत्पन्न होता है। इसके विपरीत शासकीय अधिवक्ता ने इस तर्क का पुरजोर विरोध किया और कहा कि पीड़ित पक्ष ग्रामीण पृष्ठभूमि से आता है इसलिए रिपोर्ट में कुछ घंटों का विलंब स्वाभाविक है। न्यायालय ने दोनों पक्षों की दलीलों को विस्तार से सुना और केस डायरी का गहन अवलोकन किया। कानून का यह स्थापित सिद्धांत है कि केवल तकनीकी आधार पर किसी गंभीर अपराध के मामले को खारिज नहीं किया जा सकता। न्याय का मुख्य उद्देश्य सत्य का पता लगाना और समाज में शांति व्यवस्था बनाए रखना है। इस मामले में चश्मदीद गवाहों के बयान पूरी तरह से विश्वसनीय और सुसंगत प्रतीत होते हैं। चिकित्सा साक्ष्य भी मौखिक बयानों की पुष्टि करते हैं जिससे आरोपी की संलिप्तता पूरी तरह स्पष्ट हो जाती है। प्रस्तुत दस्तावेज यह साबित करने के लिए पर्याप्त हैं कि घटना पूर्व नियोजित थी। विद्वान न्यायाधीश ने अपने निर्णय में स्पष्ट किया कि समाज में बढ़ते अपराधों को देखते हुए अपराधियों के प्रति किसी भी प्रकार की अनावश्यक नरमी नहीं बरती जा सकती। सजा ऐसी होनी चाहिए जो समाज में एक कड़ा संदेश दे। इस प्रकार न्यायालय ने अधीनस्थ अदालत के फैसले को बरकरार रखते हुए अपील को खारिज करने का आदेश दिया। विधि के शासन को बनाए रखने के लिए न्यायिक विवेक का उचित उपयोग अनिवार्य है।",
+        matter2: "प्रशासनिक कानून के सिद्धांतों के अनुसार किसी भी लोक सेवक के विरुद्ध अनुशासनात्मक कार्यवाही करते समय प्राकृतिक न्याय के नियमों का पूर्ण पालन किया जाना अनिवार्य है। इस मामले में याचिकाकर्ता ने अपनी सेवा समाप्ति के आदेश को इस आधार पर चुनौती दी है कि उसे अपनी बात रखने का उचित अवसर प्रदान नहीं किया गया। बिना कारण बताओ नोटिस जारी किए और बिना जांच अधिकारी की नियुक्ति के सीधे बर्खास्तगी का आदेश पारित करना स्थापित प्रशासनिक प्रक्रियाओं का खुला उल्लंघन है। प्रतिवादी विभाग की ओर से प्रस्तुत हलफट्नामे में यह कहा गया कि याचिकाकर्ता को मौखिक रूप से सचेत किया गया था और उसके आचरण के कारण विभाग की छवि धूमिल हो रही थी। परंतु न्यायालय इस तर्क से सहमत नहीं हुआ क्योंकि लिखित प्रक्रिया का कोई विकल्प नहीं हो सकता। कानून की नजर में प्रक्रियात्मक निष्पक्षता एक मौलिक अधिकार है। यदि किसी व्यक्ति की आजीविका छीनी जा रही है तो उसे निष्पक्ष सुनवाई का अधिकार मिलना ही चाहिए। जांच समिति की रिपोर्ट में भी कई विसंगतियां पाई गईं और गवाहों के बयान याचिकाकर्ता की अनुपस्थिति में दर्ज किए गए थे। इस प्रकार की कार्यवाही को मनमाना और दोषपूर्ण माना जाएगा। उच्च न्यायालय ने अपने विस्तृत निर्णय में यह प्रतिपादित किया कि प्रशासनिक अधिकारियों को अपने अधिकारों का प्रयोग करते समय पूर्वाग्रह से मुक्त रहना चाहिए। शक्ति का दुरुपयोग कानून के शासन को कमजोर करता है। अदालत ने सेवा समाप्ति के विवादित आदेश को निरस्त करते हुए याचिकाकर्ता को सेवा में बहाल करने का निर्देश दिया।",
+        matter3: "अपराधिक विवेचना के दौरान पुलिस अधिकारियों को निष्पक्षता और वैज्ञानिक दृष्टिकोण अपनाना चाहिए ताकि वास्तविक अपराधी को सजा मिल सके। इस प्रकरण में आरोपी पर भारतीय दंड संहिता की गंभीर धाराओं के तहत मामला दर्ज किया गया था। जांच अधिकारी ने घटना स्थल से उंगलियों के निशान और अन्य महत्वपूर्ण वैज्ञानिक साक्ष्य एकत्र किए थे जिन्हें फोरेंसिक प्रयोगशाला भेजा गया। बचाव पक्ष के वकील ने यह तर्क दिया कि पुलिस ने झूठे साक्ष्य गढ़कर उनके मुवक्किल को फंसाया है और वास्तविक आरोपी अभी भी पुलिस की पकड़ से बाहर है। गवाहों के बयानों में कई विरोधाभास पाए गए जिससे अभियोजन पक्ष का मामला कुछ कमजोर होता दिखाई दे रहा था। परंतु मुख्य गवाह ने अदालत के समक्ष अपनी गवाही पर अडिग रहकर पूरी घटना का विवरण दिया। न्यायालय ने उल्लेख किया कि छोटी-मोटी विसंगतियां मानवीय स्वभाव के कारण संभव हैं और उन्हें पूरे मामले को खारिज करने का आधार नहीं बनाया जा सकता। आपराधिक न्याय प्रणाली में साक्ष्य का वजन देखा जाता है न कि गवाहों की संख्या। इस मामले में परिस्थिति जन्य साक्ष्य भी आरोपी के अपराध की ओर इशारा करते हैं। आरोपी घटना के बाद से ही फरार था और उसके पास से अपराध में प्रयुक्त हथियार भी बरामद हुआ था। हथियार पर पाए गए खून के निशान पीड़ित के链 ब्लड ग्रुप से मेल खाते हैं। यह एक अकाट्य साक्ष्य है जिसे नकारा नहीं जा सकता। अदालत ने माना कि विवेचना में कुछ कमियां अवश्य रहीं परंतु वे इतनी गंभीर नहीं थीं कि पूरे मामले की जड़ ही काट दें।"
+    };
+
+    var wordsArray = [];
+    var currentWordIndex = 0;
+    var timeLeft = 600; 
+    var timerId = null;
+    var isTestStarted = false;
+
+    // सफलतापूर्वक लोड होने का मैसेज
+    document.getElementById("systemStatus").innerHTML = "✅ नया सिस्टम सफलतापूर्वक लोड हो गया है! अब पैराग्राफ चुनें।";
+
+    function loadParagraph() {
+        var select = document.getElementById('paragraphSelect');
+        var display = document.getElementById('paragraphDisplay');
+        
+        resetTest();
+
+        if (select && select.value && paragraphs[select.value]) {
+            var rawText = paragraphs[select.value];
+            wordsArray = rawText.split(" "); 
+            
+            var htmlContent = "";
+            for (var i = 0; i < wordsArray.length; i++) {
+                htmlContent += '<span id="word_' + i + '" class="word">' + wordsArray[i] + '</span> ';
+            }
+            display.innerHTML = htmlContent;
+            highlightWord();
+        } else {
+            display.innerHTML = "कृपया ऊपर से कोई भी एक कोर्ट मैटर चुनें...";
+        }
+    }
+
+    function highlightWord() {
+        var allWords = document.getElementsByClassName('word');
+        for (var i = 0; i < allWords.length; i++) {
+            allWords[i].classList.remove('current-word');
+        }
+        
+        var currentWordElement = document.getElementById('word_' + currentWordIndex);
+        if (currentWordElement) {
+            currentWordElement.classList.add('current-word');
+            var displayBox = document.getElementById('paragraphDisplay');
+            displayBox.scrollTop = currentWordElement.offsetTop - displayBox.offsetTop - 40;
+        }
+    }
+
+    function handleSpace(event) {
+        if (event.keyCode === 32) { 
+            event.preventDefault(); 
+            
+            var typingArea = document.getElementById('typingArea');
+            var typedText = typingArea.value.trim();
+            
+            if (typedText === "" || wordsArray.length === 0) return;
+
+            var currentWordElement = document.getElementById('word_' + currentWordIndex);
+            if (currentWordElement) {
+                if (typedText === wordsArray[currentWordIndex]) {
